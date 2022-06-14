@@ -74,8 +74,10 @@ const App = () => {
   });
 
   React.useEffect(() => {
+    if (!searchTerm) return;
+
     dispatchStories({ type: "STORIES_FETCH_INIT" });
-    fetch(`${API_ENDPOINT}react`) 
+    fetch(`${API_ENDPOINT}${searchTerm}`) 
     .then((response) => response.json())
     .then((result)=> {
           dispatchStories({
@@ -84,7 +86,7 @@ const App = () => {
           });
     }).catch(() => dispatchStories({ type: "STORIES_FETCH_FAILURE" }));
 
-  }, []);
+  }, [searchTerm]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
